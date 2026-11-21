@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Little Something for You</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- WELCOME SCREEN -->
+  <section class="welcome-screen" id="welcomeScreen">
+    <div class="welcome-content">
+      <p class="welcome-subtitle">A LITTLE SOMETHING FOR YOU</p>
+      <h1>Are you ready?</h1>
+      <p class="welcome-description" id="welcomeDescription">
+        I have something special waiting for you.
+      </p>
+
+      <div class="welcome-buttons">
+        <button id="yesButton" class="yes-button">Yes ♡</button>
+        <button id="noButton" class="no-button">No</button>
+      </div>
+
+      <p class="welcome-footer">Take your time. No rush.</p>
+    </div>
+  </section>
+
+  <!-- SCENE 2: NOTEBOOK -->
+  <section class="notebook-screen" id="notebookScreen">
+    <div class="notebook-scene">
+      <p class="notebook-caption">A NOTE BEFORE WE BEGIN</p>
+
+      <div class="notebook" id="notebook">
+        <div class="notebook-page notebook-left"></div>
+        <div class="notebook-page notebook-right"></div>
+
+        <div class="notebook-lines">
+          <p class="notebook-line line-one">
+            <span id="notebookTextOne"></span>
+          </p>
+
+          <p class="notebook-line line-two">
+            <span id="notebookTextTwo"></span>
+          </p>
+        </div>
+
+        <div class="notebook-fold"></div>
+      </div>
+
+      <p class="notebook-footer">♡</p>
+    </div>
+  </section>
+
+  <!-- GIFT BOX AND FLOWER TRANSITION -->
+  <section class="flower-rain-screen" id="flowerRainScreen">
+    <div class="gift-box-wrap" id="giftBoxWrap">
+      <p class="gift-box-instruction">A little surprise for you...</p>
+
+      <button class="gift-box" id="giftBox" aria-label="Open the gift box">
+        <span class="gift-box-lid"></span>
+        <span class="gift-box-base"></span>
+        <span class="gift-box-ribbon"></span>
+      </button>
+
+      <p class="gift-box-hint">Tap the box ♡</p>
+    </div>
+
+    <div id="flowerPetals"></div>
+  </section>
+
+  <!-- BACKGROUND MUSIC -->
+  <audio id="favoriteSong" src="favorite-song.mp3" preload="auto" loop></audio>
+
+  <!-- BOUQUET SCENE -->
+  <section class="bouquet-screen" id="bouquetScreen">
+    <div class="bouquet-content">
+      <p class="bouquet-subtitle">A LITTLE GIFT FOR YOU</p>
+
+      <img
+        src="sunflower-bouquet.png"
+        alt="A beautiful bouquet of sunflowers"
+        class="bouquet-flowers"
+      >
+
+      <h2>A bouquet of your favorite flowers.</h2>
+      <p class="bouquet-message">I hope you like it. ♡</p>
+    </div>
+  </section>
+
+  <!-- SUNSET BACKGROUND -->
+  <div class="sun"></div>
+  <div class="horizon"></div>
+
+  <div class="ocean">
+    <div class="wave wave-one"></div>
+    <div class="wave wave-two"></div>
+    <div class="wave wave-three"></div>
+  </div>
+
+  <!-- FLOATING PARTICLES -->
+  <div class="particles" id="particles"></div>
+
+  <!-- ENVELOPE INTRODUCTION -->
+  <main class="container">
+    <p class="subtitle">A little something, just for you</p>
+    <h1>Hey, Lhots.</h1>
+    <p class="instruction">I have something I'd like you to read.</p>
+
+    <div class="envelope-wrapper">
+      <div class="envelope" id="envelope">
+        <div class="letter">
+          <p>For you, always.</p>
+        </div>
+
+        <div class="envelope-front"></div>
+        <div class="flap"></div>
+        <div class="seal">♥</div>
+      </div>
+    </div>
+
+    <button id="openButton">Open your letter</button>
+
+    <p class="footer">
+      Somewhere between the sunset and the sea.
+    </p>
+  </main>
+
+  <!-- FULL LETTER READING SCREEN -->
+  <section class="reading-view" id="readingView" aria-hidden="true">
+    <article class="reading-paper">
+
+      <p class="letter-greeting">Lhots,</p>
+
+      <div class="letter-content">
+        <p>
+          Ambot, di ko kabalo if ma-explain ba nako tarong akong gusto isulti,
+          pero naa jud things nga mas nasabtan nako karon compared sauna.
+        </p>
+
+        <p>
+          Katong mga times nga na-push away ko nimo, di jud lalim para nako ato.
+          Especially kay naa pud koy kaugalingong mga problema nga gidala ato
+          nga time, then na-sagol tanan. Mao to eventually nag-breakdown ko.
+          I know na-pressure pud tika ato, and looking back, naa pud koy things
+          nga wala nako na-handle tarong.
+        </p>
+
+        <p>
+          After those months nga wala ta nag-contact, naka-rest pud ko and had
+          time to process things. Dili man nga figured out na nako tanan, but
+          I think mas nakasabot ko karon nga sometimes when things get heavy
+          for you, you tend to distance yourself. And before, I didn't really
+          know how to handle that without letting my own emotions take over.
+        </p>
+
+        <p>
+          I still want to know you more, Lhots. Not just when you're happy or
+          when things are okay, but even on days nga kapoy ka, di ka ganahan
+          makigstorya, or daghan ka'g gina-think. You don't always have to be
+          okay, and you don't have to explain yourself all the time. I know
+          I can't fix everything you're going through, but I'd like to
+          understand you better. And if you need space, I want to learn to
+          respect that without making things harder for you.
+        </p>
+
+        <p>
+          I know love isn't just about being patient or saying nga kaya nako.
+          Naa pud koy own shortcomings, and I know I still have a lot to work
+          on sa akong self. I don't want us to go through the same things again.
+        </p>
+
+        <p>
+          If ever someday you find yourself ready, and if you'd be willing to
+          give us another chance, I'd still want that. I'd want us to take
+          things slowly, get to know each other more, and do things better
+          this time. Not because I think everything would be easy, or because
+          I can promise nga perfect ko, but because it's you. HAHAHA.
+        </p>
+
+        <p>
+          But I know that's not something I can ask you to force, and I know
+          it has to be something you'd want pud. For now, I just hope things
+          go well for you, especially sa imong mock boards and everything
+          you're working hard for. I know daghan ka'g giatubang, and I hope
+          you give yourself enough rest pud in between all those things.
+        </p>
+      </div>
+
+      <p class="letter-signature">With warmth,</p>
+
+      <!-- CONTINUE BUTTON -->
+      <button class="continue-button" id="continueButton" type="button">
+        Continue ♡
+      </button>
+
+    </article>
+  </section>
+
+  <!-- FINAL NO-PRESSURE SCENE -->
+  <section class="final-screen" id="finalScreen" aria-hidden="true">
+    <div class="final-content">
+
+      <p class="final-subtitle">BEFORE YOU GO...</p>
+
+      <h2 class="final-heading">One last thing, Lhots. ♡</h2>
+
+      <div class="final-messages">
+        <p class="final-message">
+          Take your time, okay?
+        </p>
+
+        <p class="final-message">
+          I hope you know that there's absolutely no pressure to respond to any of this.
+        </p>
+
+        <p class="final-message">
+          You don't have to figure anything out, and you don't owe me an answer.
+        </p>
+
+        <p class="final-message">
+          I just wanted to share what's been on my mind and let you know that I genuinely wish you well.
+        </p>
+
+        <p class="final-message">
+          Whatever happens after this, I hope you continue choosing what makes you happy and gives you peace.
+        </p>
+
+        <p class="final-message final-last">
+          Take care of yourself, okay? ♡
+        </p>
+      </div>
+
+      <div class="final-footer">
+        <span>Always wishing you well.</span>
+        <span class="final-heart">♥</span>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
