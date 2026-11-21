@@ -27,7 +27,6 @@ const giftBox = document.getElementById("giftBox");
 const favoriteSong = document.getElementById("favoriteSong");
 const bouquetScreen = document.getElementById("bouquetScreen");
 
-// Final scene elements
 const continueButton = document.getElementById("continueButton");
 const finalScreen = document.getElementById("finalScreen");
 
@@ -35,9 +34,6 @@ const finalScreen = document.getElementById("finalScreen");
 /* ================================
    SECOND SONG
 ================================ */
-
-// Automatically create the second audio element.
-// No additional HTML changes required.
 
 let letterSong = document.getElementById("letterSong");
 
@@ -49,12 +45,15 @@ if (!letterSong) {
   document.body.appendChild(letterSong);
 }
 
-// Neither song should loop.
 if (favoriteSong) {
   favoriteSong.loop = false;
+  favoriteSong.preload = "auto";
+  favoriteSong.setAttribute("playsinline", "");
 }
 
 letterSong.loop = false;
+letterSong.preload = "auto";
+letterSong.setAttribute("playsinline", "");
 
 
 /* ================================
@@ -74,6 +73,7 @@ let boxOpened = false;
 let bouquetAccepted = false;
 let letterSongStarted = false;
 let finalSceneOpened = false;
+let audioUnlocked = false;
 
 const fadeIntervals = new Map();
 
@@ -85,7 +85,6 @@ const fadeIntervals = new Map();
 function fadeAudio(audio, targetVolume, duration, onComplete) {
   if (!audio) return;
 
-  // Clear any previous fade.
   if (fadeIntervals.has(audio)) {
     clearInterval(fadeIntervals.get(audio));
     fadeIntervals.delete(audio);
@@ -108,9 +107,7 @@ function fadeAudio(audio, targetVolume, duration, onComplete) {
       clearInterval(interval);
       fadeIntervals.delete(audio);
 
-      if (onComplete) {
-        onComplete();
-      }
+      if (onComplete) onComplete();
     }
   }, 50);
 
@@ -118,10 +115,52 @@ function fadeAudio(audio, targetVolume, duration, onComplete) {
 }
 
 
-// Start the first song after the notebook message.
+// Prepare audio immediately when the visitor taps YES.
+function unlockAudio() {
+  if (audioUnlocked) return;
+
+  audioUnlocked = true;
+
+  const songs = [favoriteSong, letterSong];
+
+  songs.forEach(audio => {
+    if (!audio) return;
+
+    audio.setAttribute("playsinline", "");
+    audio.setAttribute("webkit-playsinline", "");
+    audio.preload = "auto";
+
+    audio.muted = true;
+    audio.volume = 0;
+
+    const playback = audio.play();
+
+    if (playback && typeof playback.then === "function") {
+      playback.then(() => {
+        audio.pause();
+
+        try {
+          audio.currentTime = 0;
+        } catch (error) {
+          console.log("Audio reset:", error);
+        }
+
+        audio.muted = false;
+        audio.volume = 0.65;
+
+      }).catch(error => {
+        console.log("Audio preparation:", error);
+      });
+    }
+  });
+}
+
+
+// First song.
 function playFavoriteSong() {
   if (!favoriteSong) return;
 
+  favoriteSong.muted = false;
   favoriteSong.volume = 0.65;
 
   favoriteSong.play().catch(error => {
@@ -130,19 +169,18 @@ function playFavoriteSong() {
 }
 
 
-// Switch to Daniel Caesar's "Always" when the letter appears.
+// Second song.
 function switchToLetterSong() {
   if (!letterSong || letterSongStarted) return;
 
   letterSongStarted = true;
 
-  letterSong.volume = 0.65;
+  letterSong.muted = false;
+  letterSong.volume = 0;
 
-  // Start the second song.
   letterSong.play()
     .then(() => {
 
-      // Fade out the first song.
       if (favoriteSong && !favoriteSong.paused) {
         fadeAudio(favoriteSong, 0, 3000, () => {
           favoriteSong.pause();
@@ -150,7 +188,6 @@ function switchToLetterSong() {
         });
       }
 
-      // Fade in the second song.
       fadeAudio(letterSong, 0.65, 3000);
 
     })
@@ -163,8 +200,6 @@ function switchToLetterSong() {
 /* ================================
    BOUQUET CHOICE BUTTONS
 ================================ */
-
-// Create the buttons automatically.
 
 const bouquetContent = bouquetScreen.querySelector(".bouquet-content");
 
@@ -421,6 +456,10 @@ for (let i = 0; i < 30; i++) {
 ================================ */
 
 yesButton.addEventListener("click", () => {
+
+  // Prepare both songs immediately from the user's tap.
+  unlockAudio();
+
   yesButton.disabled = true;
   noButton.disabled = true;
 
@@ -492,7 +531,7 @@ function startNotebookTyping() {
         // Start the first song after the typing animation.
         playFavoriteSong();
 
-        // Keep the notebook scene visible for 15 seconds.
+        // Keep notebook visible for 15 seconds.
         setTimeout(() => {
 
           notebookScreen.classList.add("transition-out");
@@ -602,7 +641,6 @@ giftBox.addEventListener("click", () => {
   giftBoxWrap.classList.remove("ready-to-burst");
   giftBoxWrap.classList.add("opened");
 
-  // Let the lid open before the flowers erupt.
   setTimeout(() => {
     releaseFlowers();
   }, 650);
@@ -678,7 +716,6 @@ function releaseFlowers() {
 
     giftBoxWrap.classList.add("disappearing");
 
-    // Let her enjoy the flower-filled screen for 10 seconds.
     setTimeout(() => {
 
       bouquetScreen.classList.add("active");
@@ -804,7 +841,6 @@ function extractLetter() {
     readingView.classList.add("active");
     readingView.setAttribute("aria-hidden", "false");
 
-    // Switch to Daniel Caesar's "Always".
     switchToLetterSong();
 
     startLetterTyping();
@@ -842,7 +878,6 @@ function startLetterTyping() {
     element.classList.remove("typing");
   });
 
-  // Hide Continue until the letter is completely typed.
   continueButton.classList.remove("visible");
   continueButton.disabled = true;
 
@@ -854,10 +889,8 @@ function startLetterTyping() {
 
   function typeNextCharacter() {
 
-    // The whole letter has finished typing.
     if (partIndex >= letterParts.length) {
 
-      // Give the reader a moment before showing Continue.
       setTimeout(() => {
         continueButton.classList.add("visible");
         continueButton.disabled = false;
@@ -896,16 +929,13 @@ function startLetterTyping() {
 
 continueButton.addEventListener("click", () => {
 
-  // Prevent opening the final scene more than once.
   if (finalSceneOpened) return;
 
   finalSceneOpened = true;
   continueButton.disabled = true;
 
-  // Fade out the letter.
   readingView.classList.add("leaving");
 
-  // Bring in the final scene after the letter fades.
   setTimeout(() => {
 
     readingView.classList.remove("active");
@@ -916,7 +946,6 @@ continueButton.addEventListener("click", () => {
 
   }, 1100);
 
-  // The letter song is intentionally left untouched.
-  // It continues playing naturally through the final scene.
+  // Leave the letter song playing naturally.
 
 });
